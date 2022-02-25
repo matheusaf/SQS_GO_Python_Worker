@@ -9,6 +9,6 @@ Neste projeto foi realizado os seguintes desenvolvimentos:
 Cada recurso desenvolvido possui um container
 
 Para executar o projeto, basta utilizar o comando abaixo no diretório raiz do projeto:
-'''bash
+'''console
 docker-compose up
 '''
