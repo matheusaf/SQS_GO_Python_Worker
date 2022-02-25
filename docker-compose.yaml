@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+        sqs:
+                image: localstack/localstack:latest
+                env_file:
+                        - .env
+                        - sqs.env
+                ports: 
+                        - "4566:4566"
+                        - "4567:4567"
+                volumes:
+                        - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
+                        - "/var/run/docker.sock:/var/run/docker.sock"   
+                        - "./sqs/init.sh:/docker-entrypoint-initaws.d/init.sh"
+        api:
+                depends_on:
+                        - sqs
+                build:
+                        context: ./backend
+                        dockerfile: Dockerfile
+                ports:
+                        - "80:80"
+                        - "443:443"
+                env_file:
+                        - .env
+                        - sqs_consumer.env
+        worker:
+                depends_on:
+                        - sqs
+                        - api
+                build: 
+                        context: ./worker
+                        dockerfile: Dockerfile
+                env_file:
+                        - .env
+                        - sqs_consumer.env
+                        - worker.env

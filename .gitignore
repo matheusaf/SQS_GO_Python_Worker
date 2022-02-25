@@ -1,0 +1,4 @@
+.vscode
+/sqs/Dockerfile
+/**/**/__pycache__
+/**/**/env
