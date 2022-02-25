@@ -8,7 +8,6 @@ from services import slack, sqs
 # logger
 logger: logging.Logger = logging.getLogger(__name__)
 
-
 def main():
     print("Starting worker...")
     try:
