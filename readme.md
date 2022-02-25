@@ -13,3 +13,9 @@ Para executar o projeto, basta utilizar o comando abaixo no diretório raiz do p
 ```shell
 docker-compose up
 ```
+
+Obs: Para que a mensagem seja enviada para o slack é necessário substituir o valor da variável de ambiente, conforme apresentado abaixo, no arquivo \*\*worker.env\*\*
+
+```shell
+SLACK_BOT_TOKEN=INSERIR_TOKEN_SLACK
+```

@@ -9,19 +9,14 @@ from botocore.exceptions import ClientError
 
 
 def retrive_message_attributes(queue_message) -> Dict[str, str]:
-    """
-    Send a message to an Amazon SQS queue.
-
-    :param queue: The queue that receives the message.
-    :param message_body: The body text of the message.
-    :param message_attributes: Custom attributes of the message. These are key-value pairs that can be whatever you want.
-    :return: The response from SQS that contains the assigned message ID.
-    """
+    # recuperando atributos da mensagem
     message: Dict[str, Dict[str, str]] = queue_message.message_attributes
 
+    # caso a mensagem seja nula é retornado um dicionario vazio
     if not message:
         return {}
 
+    # retornando um dicionario contendo apenas os nomes dos atributos e seus respectivos valores
     return { 
         key: value.get("StringValue", "") 
         for key, value in message.items()
@@ -29,14 +24,14 @@ def retrive_message_attributes(queue_message) -> Dict[str, str]:
 
 
 def sqs_resource() -> object:
-    # iniciando a fila
+    # obtendo variaveis de ambiente necessarias para conectar com o SQS
     aws_region = os.environ.get("AWS_DEFAULT_REGION")
     endpoint_url = os.environ.get("AWS_ENDPOINT")
     aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
     aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
     queue_name: str = os.environ.get("SQS_QUEUE_NAME")
 
-    # configurando o long pooling do sqs
+    # criando conexao com o locastack utilizando as variaveis de ambiente obtidas acima
     sqs = boto3.resource(
         "sqs", 
 		region_name=aws_region, 
